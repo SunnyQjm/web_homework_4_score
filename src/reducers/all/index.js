@@ -16,7 +16,7 @@ const initState = {
         Physical: 99,
     }],
     keys: new Map(),
-    selectedKeys: [],
+    selectedRowKeys: [],
 };
 
 initState.keys.set('Robbin', initState.data[0]);
@@ -33,10 +33,22 @@ const AllReducer = (state = initState, action) => {
             newState.data = newState.data.concat(action.data);
             break;
         case ACTION_TYPE_ON_SELECT_CHANGE:
-            newState.selectedKeys = action.selectedRowKeys;
+            newState.selectedRowKeys = action.selectedRowKeys;
             break;
         case ACTION_TYPE_DELETE:
+            let srk = state.selectedRowKeys;
             newState.keys.delete(action.data.name);
+            newState.selectedRowKeys = [];
+            srk.forEach(value => {
+                if (value === action.index) {
+
+                } else if (value > action.index) {
+                    newState.selectedRowKeys.push(value - 1)
+                } else {
+                    newState.selectedRowKeys.push(value)
+                }
+            });
+            console.log(newState.selectedRowKeys);
             newState.data = newState.data.filter(data => {
                 return data.name !== action.data.name;
             });

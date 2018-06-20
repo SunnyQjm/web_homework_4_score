@@ -45,6 +45,7 @@ const columns = [{
            store.dispatch({
                type: ACTION_TYPE_DELETE,
                data: record,
+               index: index
            })}
        }>Delete</a>
     }
@@ -74,8 +75,8 @@ class AllComponent extends React.Component {
     };
 
     render() {
-        let {addData, selectedKeys} = this.props;
-        this.rowSelection.selectedRowKeys = selectedKeys;
+        let {addData, selectedRowKeys} = this.props;
+        this.rowSelection.selectedRowKeys = selectedRowKeys;
         return (
             <AllBody>
                 <AddComponent onAdd={(name, Chinese, Math, English, Physical) => {
